@@ -1,12 +1,12 @@
-name: CI/CD Workflow
+name: Análisis Estático de Código
 
 on:
-  push:
+  pull_request:
     branches:
-      - main
+      - main  # Puedes ajustar la rama según tus necesidades
 
 jobs:
-  build:
+  sonarqube:
     runs-on: ubuntu-latest
     
     steps:
@@ -19,12 +19,12 @@ jobs:
         distribution: 'adopt'
         java-version: '11'
 
-    - name: Build and Test
+    - name: SonarQube Scan
       run: |
-        ./gradlew build
-      shell: bash
-
-    - name: Deploy
-      run: |
-        ./gradlew deploy
-      if: success()
+        ./gradlew sonarqube \
+          -Dsonar.projectKey=my_project_key \
+          -Dsonar.organization=my_organization_key \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.login=$SONAR_TOKEN  # Asegúrate de definir esta variable en la configuración de tu repositorio
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
