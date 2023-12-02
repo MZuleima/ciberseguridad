@@ -1,0 +1,30 @@
+name: CI/CD Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest  # Cambiado a entorno de Windows
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set Up JDK
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: '11'
+
+    - name: Build and Test
+      run: |
+        .\gradlew.bat build  # Usando .\gradlew.bat para Windows
+      shell: pwsh  # Configurando el shell como PowerShell para ejecutar comandos de Windows
+
+    - name: Deploy
+      run: |
+        .\gradlew.bat deploy  # Ajusta el comando según tus necesidades
+      if: success()
