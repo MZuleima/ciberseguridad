@@ -7,8 +7,8 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest  # Cambiado a entorno de Windows
-
+    runs-on: ubuntu-latest
+    
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
@@ -21,10 +21,10 @@ jobs:
 
     - name: Build and Test
       run: |
-        .\gradlew.bat build  # Usando .\gradlew.bat para Windows
-      shell: pwsh  # Configurando el shell como PowerShell para ejecutar comandos de Windows
+        ./gradlew build
+      shell: bash
 
     - name: Deploy
       run: |
-        .\gradlew.bat deploy  # Ajusta el comando según tus necesidades
+        ./gradlew deploy
       if: success()
