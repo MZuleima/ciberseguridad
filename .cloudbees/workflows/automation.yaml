@@ -1,0 +1,8 @@
+pipeline:
+  agent: any
+
+  stages:
+    - stage: "Verificar Conexión al Repositorio"
+      steps:
+        - script:
+            - git clone https://github.com/MZuleima/ciberseguridad
